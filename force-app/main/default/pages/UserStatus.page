@@ -1,0 +1,15 @@
+<apex:page >
+    
+    <apex:pageBlock title="User Status">
+        <apex:pageBlockSection columns="1">
+        	
+            {!$User.FirstName & '' & $User.LastName}
+            ({!IF($User.IsActive, $User.Username, 'inactive')})
+            
+            
+            
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+
+</apex:page>
