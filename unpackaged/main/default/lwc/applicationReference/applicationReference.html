@@ -1,0 +1,56 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Reference -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+        <lightning-messages></lightning-messages>
+        <template if:true={hasBeenSubmitted}>
+            <div class="demo-only" style="padding:0.5rem;background-color:lightgoldenrodyellow;text-align: center;">
+                <div>
+                    Application submitted on <lightning-formatted-date-time year="numeric" month="long" day="numeric" value={submittedDate}></lightning-formatted-date-time>.
+                </div>
+            </div>
+            <br />
+            <lightning-card title="Teacher References">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-output-field field-name="Teacher_Reference_Name__c" variant="label-stacked"></lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-output-field field-name="Teacher_Reference_Email__c" variant="label-stacked"></lightning-output-field>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+        <template if:true={isEditable}>
+            <lightning-card title="Teacher References">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input-field field-name="Teacher_Reference_Name__c" variant="label-stacked"></lightning-input-field>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input-field field-name="Teacher_Reference_Email__c" variant="label-stacked"></lightning-input-field>
+                    </div>
+                </div>
+            </lightning-card>
+            <br />
+            <center>
+                <lightning-button label="BACK" onclick={doGoBack} ></lightning-button>
+                &nbsp;
+                <lightning-button type="submit" label="SAVE"></lightning-button>
+                &nbsp;
+                <lightning-button label="SAVE & NEXT" onclick={doSaveAndNext} variant="brand"></lightning-button>
+            </center>
+        </template>
+    </lightning-record-edit-form>
+    <br />
+
+</template>

@@ -1,0 +1,18 @@
+<!--
+ - Created by MacBookPro on 2/11/21.
+ -->
+
+<!-- Admissions Mental Health -->
+<template>
+    <lightning-card title="Mental Health History">
+
+        <template if:true={isAwaitingMHF}>
+            <p>A Mental Health Form has been sent to <b>{mhName}</b> at <b>{mhEmail}</b>.  Please contact your provider to ensure this form
+                is returned to us in a timely fashion.</p>
+        </template>
+        <template if:true={isMHFRecd}>
+            <p>Your Mental Health Form has been received.</p>
+        </template>
+
+    </lightning-card>
+</template>

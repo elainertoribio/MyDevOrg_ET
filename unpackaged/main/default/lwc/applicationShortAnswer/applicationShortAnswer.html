@@ -1,0 +1,122 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Short Answer -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsubmit={handleSubmit} onerror={handleError} onsuccess={handleSuccess}>
+        <lightning-messages></lightning-messages>
+        <template if:true={hasBeenSubmitted}>
+            <div class="demo-only" style="padding:0.5rem;background-color:lightgoldenrodyellow;text-align: center;">
+                <div>
+                    Application submitted on <lightning-formatted-date-time year="numeric" month="long" day="numeric" value={submittedDate}></lightning-formatted-date-time>.
+                </div>
+            </div>
+            <br />
+            <lightning-card title="Short Answer Topics">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Why did you choose to apply to Dragons?<span class="slds-required">*</span></label>
+                    <lightning-output-field field-name="Why_Did_You_Choose_To_Apply_to_Dragons__c" variant="label-hidden"></lightning-output-field>
+
+                    <br />
+                    <label class="slds-form-element__label">What aspects of your program are the most exciting? What makes you feel nervous?<span class="slds-required">*</span></label>
+                    <lightning-output-field field-name="What_Are_You_Most_Excited_Nervous_About__c" variant="label-hidden"></lightning-output-field>
+
+                    <br />
+                    <label class="slds-form-element__label">How do you participate in group settings? How do you feel about traveling with a small group of students and instructors for an extended period of time?
+                    <span class="slds-required">*</span></label>
+                    <lightning-output-field field-name="How_Do_You_Do_In_Group_Setting__c" variant="label-hidden"></lightning-output-field>
+
+                    <br />
+                    <label class="slds-form-element__label">What questions do you have about your program?</label>
+                    <span class="slds-required">*</span><lightning-output-field field-name="Questions_From_Applicant__c" variant="label-hidden"></lightning-output-field>
+                </div>
+            </lightning-card>
+            <br/>
+            <lightning-card title="OPTIONAL DEMOGRAPHIC QUESTIONS">
+                <p class="smallCaps">
+                    the following questions are voluntary and have no bearing on your application. data collected through these questions is used to inform and improve Justice, Equity, Diversity, and Inclusion (JEDI) initiatives at Dragons. 
+                </p><br/>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">What racial or ethnic group/s do you most closely identify with? <strong>please scroll and</strong> select as many options as apply to you</label>
+                    <lightning-output-field field-name="racial_or_ethnic_group__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">If you selected “Prefer to self-describe,” please do so here: </label>
+                    <lightning-output-field field-name="racial_Prefer_to_self_describe__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">Do you identify as a first generation college student? </label>
+                    <lightning-output-field field-name="Identify_as_a_first_generation_college__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">What type of high school do/did you attend? </label>
+                    <lightning-output-field field-name="Type_of_High_School_Attended__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">If “other,” please specify:</label>
+                    <lightning-output-field field-name="other_type_of_high_school__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                </div>
+            </lightning-card>
+
+        </template>
+
+        <template if:true={isEditable}>
+            <lightning-card title="Short Answer Topics">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Why did you choose to apply to Dragons?<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="Why_Did_You_Choose_To_Apply_to_Dragons__c" variant="label-hidden"></lightning-input-field>
+
+                    <br />
+                    <label class="slds-form-element__label">What aspects of your program are the most exciting? What makes you feel nervous?<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="What_Are_You_Most_Excited_Nervous_About__c" variant="label-hidden"></lightning-input-field>
+
+                    <br />
+                    <label class="slds-form-element__label">How do you participate in group settings? How do you feel about traveling with a small group of students and instructors for an extended period of time?
+                    <span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="How_Do_You_Do_In_Group_Setting__c" variant="label-hidden"></lightning-input-field>
+
+                    <br />
+                    <label class="slds-form-element__label">What questions do you have about your program?</label>
+                    <span class="slds-required">*</span><lightning-input-field field-name="Questions_From_Applicant__c" variant="label-hidden"></lightning-input-field>
+                </div>
+            </lightning-card>
+            <br />
+            <lightning-card title="OPTIONAL DEMOGRAPHIC QUESTIONS">
+                <p class="slds-form-element__label">
+                    the following questions are voluntary and have no bearing on your application. data collected through these questions is used to inform and improve justice, equity, diversity, and inclusion (JEDI) initiatives at dragons. 
+                </p><br/>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">What racial or ethnic group/s do you most closely identify with? <span style="text-decoration:underline">please scroll and</span> select as many options as apply to you.</label>
+                    <lightning-input-field field-name="racial_or_ethnic_group__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">If you selected “Prefer to self-describe,” please do so here: </label>
+                    <lightning-input-field field-name="racial_Prefer_to_self_describe__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Do you identify as a first generation college student? </label>
+                    <lightning-input-field field-name="Identify_as_a_first_generation_college__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">What type of high school do/did you attend? </label>
+                    <lightning-input-field field-name="Type_of_High_School_Attended__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">If “other,” please specify:</label>
+                    <lightning-input-field field-name="other_type_of_high_school__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                </div>
+            </lightning-card>
+            <br/>
+            <center>
+                <lightning-button label="BACK" onclick={doGoBack}></lightning-button>
+                &nbsp;&nbsp;
+                <lightning-button label="SAVE" type="submit"></lightning-button>
+                &nbsp;&nbsp;
+                <lightning-button label="SAVE & NEXT" variant="brand" onclick={doSaveAndNext}></lightning-button>
+            </center>
+        </template>
+    </lightning-record-edit-form>
+
+
+</template>

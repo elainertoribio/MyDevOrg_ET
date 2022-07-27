@@ -1,0 +1,271 @@
+<!--
+ - Created by MacBookPro on 1/6/21.
+ -->
+
+<!-- Onboarding Medical Info -->
+<template>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+
+       <!-- <lightning-card title="Medical Forms">
+            <template if:true={hasMedicalFormComments}>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: firebrick !important; padding: 10px;">
+                    <lightning-output-field variant="label-hidden" field-name="Medical_Forms_Comments_To_Applicant__c"></lightning-output-field>
+                </div>
+                <br />
+            </template>-->
+            <!--
+            <lightning-icon icon-name="action:close" alternative-text="Pending" title="success variant xx-small"
+            size="xx-small"></lightning-icon>&nbsp;Pending
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <lightning-icon icon-name="action:priority" alternative-text="Received" title="success variant xx-small"
+                            size="xx-small"></lightning-icon>&nbsp;Received
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <lightning-icon icon-name="action:approval" alternative-text="Approved!" title="success variant xx-small"
+                            size="xx-small"></lightning-icon>&nbsp;Approved
+            <br /><br />
+            -->
+            <!--<div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={studentMedicalFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Pending" title="Pending Upload"
+                                            size="xx-small"></lightning-icon> Student Medical Forms Pending</p>
+                    </template>
+                    <template if:true={studentMedicalFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Scan Received, Pending Approval"
+                                        size="xx-small"></lightning-icon> Student Medical Forms Received</p>
+                    </template>
+                    <template if:true={studentMedicalFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Scan Approved"
+                                            size="xx-small"></lightning-icon> Student Medical Forms Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Student Medical Form"
+                            name="Student_Medical_Form"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Student Medical Form"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <br /><br /><br /><Br />
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={doctorMedicalFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Pending" title="Pending Upload"
+                                            size="xx-small"></lightning-icon> Doctor Medical Forms Pending</p>
+                    </template>
+                    <template if:true={doctorMedicalFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Scan Received, Pending Approval"
+                                            size="xx-small"></lightning-icon> Doctor Medical Forms Received</p>
+                    </template>
+                    <template if:true={doctorMedicalFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Scan Approved"
+                                            size="xx-small"></lightning-icon> Doctor Medical Forms Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Doctor Medical Form"
+                            name="Student_Medical_Form"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Doctor Medical Form"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+
+            </div>
+        </lightning-card>-->
+        <br />
+        <lightning-card title="Additional Required Documents">
+            <template if:true={hasReqFormComments}>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: #b22222 !important; padding: 10px;">
+                    <lightning-output-field variant="label-hidden" field-name="Required_Forms_Comments_To_Applicant__c"></lightning-output-field>
+                </div>
+                <br />
+            </template>
+            
+            <div class="slds-grid slds-wrap">
+                <!-- upload card -->
+                <!--<div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={redRuleFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Pending" title="Pending Upload"
+                                           size="xx-small"></lightning-icon> Red Rules Contract Pending</p>
+                    </template>
+                    <template if:true={redRuleFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Scan Received, Pending Approval"
+                                           size="xx-small"></lightning-icon> Red Rules Contract Received</p>
+                    </template>
+                    <template if:true={redRuleFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Scan Approved"
+                                           size="xx-small"></lightning-icon> Red Rules Contract Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Red Rules Contract"
+                            name="Red_Rules_Contract"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Red Rules Contract"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div> 
+                <br /><br /><br /><Br />-->
+                <!-- Liability Form upload card -->
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={liabilityFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
+                                           size="xx-small"></lightning-icon>Liability Form - Awaiting Upload</p>
+                    </template>
+                    <template if:true={liabilityFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
+                                           size="xx-small"></lightning-icon> Liability Form - Upload Received, Approval Pending</p>
+                    </template>
+                    <template if:true={liabilityFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
+                                           size="xx-small"></lightning-icon> Liability Form - Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Liability Form"
+                            name="Liability_Form"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Liability Form"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <!-- /end upload card -->
+                <br/><br/>
+                <!-- Course Wellness Plan upload card -->
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={redRuleFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
+                                           size="xx-small"></lightning-icon> Course Wellness Plan - Awaiting Upload</p>
+                    </template>
+                    <template if:true={redRuleFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
+                                           size="xx-small"></lightning-icon> Course Wellness Plant - Upload Received, Approval Pending</p>
+                    </template>
+                    <template if:true={redRuleFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
+                                           size="xx-small"></lightning-icon> Course Wellness Plan - Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Course Wellness Plan"
+                            name="Course_Wellness_Plan"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Course Wellness Plan"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <!-- /end upload card -->
+                <br/><br/>
+                <!-- Immunization Record upload card -->
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={redRuleFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
+                                           size="xx-small"></lightning-icon> Immunization Record - Awaiting Upload</p>
+                    </template>
+                    <template if:true={redRuleFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
+                                           size="xx-small"></lightning-icon> Immunization Record Plan - Upload Received, Approval Pending</p>
+                    </template>
+                    <template if:true={redRuleFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
+                                           size="xx-small"></lightning-icon> Immunization Record Plan - Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Immunization Record"
+                            name="Immunization_Record"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Immunization Record"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <!-- /end upload card -->
+                <br/><br/>
+                <!-- Medication Worksheet upload card -->
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={redRuleFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
+                                           size="xx-small"></lightning-icon> Medication Worksheet - Awaiting Upload</p>
+                    </template>
+                    <template if:true={redRuleFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
+                                           size="xx-small"></lightning-icon> Medication Worksheet - Upload Received, Approval Pending</p>
+                    </template>
+                    <template if:true={redRuleFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
+                                           size="xx-small"></lightning-icon> Medication Worksheet - Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach Medication Worksheet"
+                            name="Medication_Worksheet"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="Medication Worksheet"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <!-- /end upload card -->
+                <br/><br/>
+                <!-- COVID-19 Vaccination Certificate upload card -->
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <template if:true={redRuleFormPending}>
+                        <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
+                                           size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Awaiting Upload</p>
+                    </template>
+                    <template if:true={redRuleFormRec}>
+                        <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
+                                           size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Upload Received, Approval Pending</p>
+                    </template>
+                    <template if:true={redRuleFormApproved}>
+                        <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
+                                           size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Approved</p>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-file-upload
+                            label="Attach COVID-19 Vaccination Certificate"
+                            name="COVID-19_Vaccination_Certificate"
+                            accept={acceptedFormats}
+                            record-id={applicationId}
+                            file-field-name="Dragon_File_Type_fileupload__c"
+                            file-field-value="COVID-19 Vaccination Certificate"
+                            onuploadfinished={handleUploadFinished}
+                            multiple>
+                    </lightning-file-upload>
+                </div>
+                <!-- /end upload card -->
+
+            </div>
+        </lightning-card>
+
+    </lightning-record-edit-form>
+</template>

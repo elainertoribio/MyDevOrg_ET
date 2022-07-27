@@ -1,0 +1,68 @@
+<!--
+ - Created by MacBookPro on 12/7/20.
+ -->
+
+<!-- Application Guardian Info -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-messages>{errorMessage}</lightning-messages>
+    <template if:true={relationships}>
+        <template for:each={relationships} for:item="rel" for:index="index">
+
+            <lightning-card title="Family Member Info" key={rel.Id}>
+               <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+
+                        <lightning-input label="First Name" value={rel.First_Name__c} class="firstname" variant="label-stacked" key={rel.Id} required=true></lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input label="Last Name" name="lastname" class="lastname" value={rel.Last_Name__c} variant="label-stacked" required=true></lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input type="email" label="Email" name="email" class="email" value={rel.Email__c} variant="label-stacked" required="true"></lightning-input>
+                    </div>
+                   <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+
+                   </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input type="phone" label="Mobile Phone" class="mobile" name="mobile" value={rel.Mobile_Phone__c} variant="label-stacked" required="true"></lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-input type="phone" label="Home Phone" name="home" class="home" value={rel.Home_Phone__c} variant="label-stacked"></lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-combobox name="role" class="role" variant="label-stacked" label="Relationship To Student" value={rel.Contact2_Role__c} options={optionsGuardianRoles} required=true></lightning-combobox>
+                    </div>
+                   <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                       <lightning-input label="If Other, please explain." name="otherRel" class="otherRel" value={rel.Other_Relationship__c} variant="label-stacked"></lightning-input>
+                   </div>
+                   <template if:true={index}>
+                   <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                       <lightning-input type="checkbox" variant="label-stacked" name="emails" class="emails" label="Please check the box if this person should NOT receive emails related to your Dragons program." checked= {rel.Opt_Out__c}></lightning-input>
+                   </div>
+                   </template>
+                </div>
+                <template if:true={index}>
+                    <a name={index} key={index} onclick={doDelete}>Delete Family Member</a>
+                </template>
+            </lightning-card>
+            <br key={rel.Id} />
+        </template>
+    </template>
+
+
+    <center>
+        <lightning-button label="ADD ANOTHER FAMILY MEMBER" onclick={addNewGuardian}></lightning-button>
+        <br /><br />
+        <lightning-button label="BACK" onclick={goBack}></lightning-button>
+        &nbsp;
+        <lightning-button label="SAVE" onclick={doSave}></lightning-button>
+        &nbsp;
+        <lightning-button label="SAVE & NEXT" onclick={doSaveAndNext} title="Non-primary action" class="slds-m-left_x-small"></lightning-button>
+    </center>
+</template>

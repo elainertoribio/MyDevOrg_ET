@@ -1,0 +1,27 @@
+<!--
+ - Created by MacBookPro on 1/6/21.
+ -->
+
+<!-- Onboarding Interview -->
+<template>
+
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card title="Interview Information">
+            <template if:true={hasInterviewComments}>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: firebrick !important;">
+                    <br />
+                    <lightning-output-field variant="label-hidden" field-name="Interview_Comments_To_Applicant__c"></lightning-output-field>
+                    <br />
+                </div>
+            </template>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Interview_Status__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Interview_DateTime__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+</template>

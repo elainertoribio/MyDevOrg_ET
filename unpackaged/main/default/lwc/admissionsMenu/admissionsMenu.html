@@ -1,0 +1,49 @@
+<!--
+* Name:     applicationPersonalInformation.hmtl
+* Author:   Strategic Growth, Inc. (www.strategicgrowthinc.com)
+* Date:     DEC 2020
+* ======================================================
+* ======================================================
+* Purpose: 	Community Menu
+* ======================================================
+* ======================================================
+* History:
+* VERSION   DATE            INITIALS    DESCRIPTION/FEATURES ADDED
+* 1.0       DEC 2020        GO          Initial Development
+ -->
+
+<!-- Admissions Menu -->
+<template>
+    <ul>
+        <ul>
+            <li>
+                <a class={isTab0On} href="admissions-myapplication">
+                    MY APPLICATION
+                </a>
+            </li>
+            <li>
+                <a class={isTab1On} href="admissions-program">
+                    PROGRAM
+                </a>
+            </li>
+            <li>
+                <a class={isTab2On} href="admissions-deposit">
+                    DEPOSIT
+                </a>
+            </li>
+            <li>
+                <a class={isTab3On} href="admissions-interview">
+                    INTERVIEW
+                </a>
+            </li>
+            <template if:true={showMentalHealthTab}>
+            <li>
+                <a class={isTab4On} href="admissions-mentalhealth">
+                    MENTAL HEALTH HISTORY
+                </a>
+            </li>
+            </template>
+        </ul>
+    </ul>
+
+</template>

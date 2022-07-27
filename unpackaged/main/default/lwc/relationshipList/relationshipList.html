@@ -1,0 +1,15 @@
+<!-- Relationship List -->
+<template>
+
+    <lightning-button value="New Relationship" label="New Relationship" onclick={createNewRelationship}></lightning-button>
+
+    <br />
+    <lightning-datatable
+            key-field="Id"
+            hide-checkbox-column
+            data={relationships}
+            columns={columnList}
+            onrowaction={handleRowAction}>
+    </lightning-datatable>
+
+</template>

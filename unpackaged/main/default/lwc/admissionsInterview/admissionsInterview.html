@@ -1,0 +1,38 @@
+<!-- Admissions Interview -->
+<template>
+    <lightning-card title="Interview">
+        <lightning-record-view-form object-api-name="Application__c" record-id={applicationId}>
+            <template if:true={hasInterviewComments}>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: firebrick !important; padding: 10px;">
+                    <lightning-output-field variant="label-hidden"  field-name="Interview_Comments_To_Applicant__c"></lightning-output-field>
+                </div>
+                <br />
+            </template>
+            <div class="slds-size_1-of-2 slds-max-small-size_1-of-1 ">
+                <lightning-output-field field-name="Interview_Status__c"></lightning-output-field>
+            </div>
+            <div class="smallCaps">
+            <lightning-output-field field-name="Interview_Status_Display__c" variant="label-hidden"></lightning-output-field>
+            </div>
+
+            <br /><br />
+            <template if:true={isInterviewScheduled}>
+                <p class="smallCaps">your interview is scheduled for:&nbsp;
+                    <b>
+                        <lightning-formatted-date-time value={interviewDate} year="numeric" month="long" day="2-digit" hour="2-digit"
+                                                      minute="2-digit" time-zone-name="short" hour12="true">
+                        </lightning-formatted-date-time></b>
+                    <br />
+                we will call you at <b>{phone}</b> at that time.</p>
+                <br />
+                <p class="smallCaps">
+                    if you would like to reschedule your interview or change your contact phone number,
+                    please contact us at the office at 303-413-0822 or&nbsp;
+                    <a href="mailto:info@wheretherebedragons.com">info@wheretherebedragons.com</a>
+                </p>
+
+            </template>
+
+        </lightning-record-view-form>
+    </lightning-card>
+</template>

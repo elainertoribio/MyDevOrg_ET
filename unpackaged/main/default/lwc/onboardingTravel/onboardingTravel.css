@@ -1,0 +1,7 @@
+.smallCaps{
+    font-variant: small-caps;
+}
+.hyperlink{
+    text-decoration: underline;
+    color: blue;
+}

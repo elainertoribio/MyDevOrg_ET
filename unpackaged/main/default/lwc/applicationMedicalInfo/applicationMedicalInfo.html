@@ -1,0 +1,100 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Medical Info -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsuccess={handleSuccess} onerror={handleError} onsubmit={handleSubmit}>
+        <template if:true={hasBeenSubmitted}>
+            <div class="demo-only" style="padding:0.5rem;background-color:lightgoldenrodyellow;text-align: center;">
+                <div>
+                    Application submitted on <lightning-formatted-date-time year="numeric" month="long" day="numeric" value={submittedDate}></lightning-formatted-date-time>.
+                </div>
+            </div>
+            <br />
+            <lightning-card title="Medical Info">
+                <div class="slds-form-element">
+                    <div class="slds-form-element">
+                        <lightning-output-field field-name="T_Shirt__c" ></lightning-output-field>
+                        <lightning-output-field id="fldActivities" field-name="Sports_Activities__c"></lightning-output-field>
+                        <lightning-output-field field-name="Swim_Ability__c" ></lightning-output-field>
+                        <lightning-output-field field-name="Can_Tread_Water__c" ></lightning-output-field>
+                        <lightning-output-field field-name="Medical_Issues__c" required="true" class="slds-show_inline-block"></lightning-output-field>
+                        <!--<lightning-input-field field-name="Health_and_physical_activity__c"></lightning-input-field>-->
+                        <lightning-output-field field-name="Medical_Details__c"></lightning-output-field>
+                        <lightning-output-field field-name="Health_and_Physical_Activity_Details__c"></lightning-output-field>
+                    </div>
+                </div>
+            </lightning-card>
+            <br />
+            <lightning-card title="Allergies & Dietary Info">
+                <div class="slds-form-element">
+                    <lightning-output-field field-name="Allergies__c"></lightning-output-field>
+                    <lightning-output-field field-name="Allergy_Details__c"></lightning-output-field>
+                    <lightning-output-field field-name="Dietary_Restrictions__c"></lightning-output-field>
+                    <lightning-output-field field-name="Other_Dietary_Restrictions__c"></lightning-output-field>
+                </div>
+
+            </lightning-card>
+        </template>
+
+        <template if:true={isEditable}>
+            <lightning-messages></lightning-messages>
+            <lightning-card title="Medical Info">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label"> What is your t-shirt size?<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="T_Shirt__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Do you currently participate in any sports or physical activities? What kinds? How often?<span class="slds-required">*</span></label>
+                    <lightning-input-field id="fldActivities2" field-name="Sports_Activities__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">What is your swimming ability?<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="Swim_Ability__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Please select any medical issues. To select "None," scroll to the bottom of the list.<span class="slds-required">*</span></label>
+                    <br />
+                    <lightning-input-field field-name="Medical_Issues__c" class="slds-show_inline-block" variant="label-hidden"></lightning-input-field>
+                    <br /><br />
+                    <label class="slds-form-element__label">If you selected any medical issues, please provide details here.</label>
+                    <lightning-input-field field-name="Medical_Details__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Is there anything in your background that might make it challenging for you to fully participate on the program?</label>
+                    <lightning-input-field field-name="Health_and_Physical_Activity_Details__c" variant="label-hidden"></lightning-input-field>
+                </div>
+            </lightning-card>
+            <lightning-card title="Allergies & Dietary Info">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Do you have any allergies? To select "none," please scroll to the bottom of the list.<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="Allergies__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">If you selected any allergies, please describe the severity of reaction and treatment for each allergy here.</label>
+                    <lightning-input-field field-name="Allergy_Details__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Do you have any dietary restrictions? To select "None," please scroll to the bottom of the list.<span class="slds-required">*</span></label>
+                    <lightning-input-field field-name="Dietary_Restrictions__c" variant="label-hidden"></lightning-input-field>
+                    <br />
+                    <label class="slds-form-element__label">Please provide any additional details about your diet.</label>
+                    <lightning-input-field field-name="Dietary_Restriction_Details__c" variant="label-hidden"></lightning-input-field>
+                </div>
+
+            </lightning-card>
+            <br /><br />
+            <center>
+                <lightning-button label="BACK" onclick={doGoBack} title="Non-primary action" class="slds-m-left_x-small"></lightning-button>
+                &nbsp;
+                <lightning-button label="SAVE" type="submit" title="Non-primary action" class="slds-m-left_x-small"></lightning-button>
+                &nbsp;
+                <lightning-button label="SAVE & NEXT" onclick={doSaveAndNext} title="Non-primary action" class="slds-m-left_x-small"></lightning-button>
+            </center>
+        </template>
+    </lightning-record-edit-form>
+
+    <br/>
+
+</template>

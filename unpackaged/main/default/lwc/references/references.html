@@ -1,0 +1,75 @@
+<!-- References -->
+<template>
+
+    <lightning-card title="Teacher Reference Form">
+        <template if:true={isInvalidApplicationId}>
+            This application does not exists.
+            Please contact info@wheretherebedragons.com and provide them the link you followed, if you believe this is in error.
+        </template>
+
+        <template if:true={isValidApplicationId}>
+            <p>
+                Your student <b>{studentName}</b> is applying for the Where There Be Dragons course, <b>{programName}</b>, and has
+                requested your personal reference to supplement their application.  We greatly appreciate any insights that you're able to provide.
+            </p>
+            <br />
+            <p>
+                If you have any questions about this form or the admissions process, please contact us at&nbsp;
+                <a href="mailto:info@wheretherebedragons.com">info@wheretherebedragons.com</a>.  Thank you for your time.
+            </p>
+            <br/>
+            <p>
+                Respectfully,<br />
+                The Dragons Admissions Team
+            </p>
+            <br/>
+
+            Reference for: <b>{studentName}</b>
+            <br /><br >
+            <lightning-record-edit-form object-api-name="Reference__c" onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                <div style="display:none"><lightning-input-field field-name="Application_Id__c" value={appId} disabled="true"></lightning-input-field></div>
+                <div style="display:none"><lightning-input-field field-name="Name"></lightning-input-field></div>
+                What are the student's general strengths?
+                <lightning-input-field field-name="Reference_Question_1__c" variant="label-hidden"></lightning-input-field>
+                <br />What are the student's general weaknesses?
+                <lightning-input-field field-name="Reference_Question_2__c" variant="label-hidden"></lightning-input-field>
+                <br />How does the student participate in groups?
+                <lightning-input-field field-name="Reference_Question_3__c" variant="label-hidden"></lightning-input-field>
+                <br />Is the student responsible and will they exercise good judgment?
+                <lightning-input-field field-name="Reference_Question_4__c" variant="label-hidden"></lightning-input-field>
+                <br />Would the student demonstrate cultural sensitivity?
+                <lightning-input-field field-name="Reference_Question_5__c" variant="label-hidden"></lightning-input-field>
+                <br />Are you aware of any history the student has had with drugs, alcohol, or similar issues?
+                <lightning-input-field field-name="Reference_Question_6__c" variant="label-hidden"></lightning-input-field>
+                <br />How does the student get along with authority figures, such teachers or coaches?
+                <lightning-input-field field-name="Reference_Question_7__c" variant="label-hidden"></lightning-input-field>
+                <br />Is the student in good physical, mental, and emotional condition and prepared for a challenging course?
+                <lightning-input-field field-name="Reference_Question_8__c" variant="label-hidden"></lightning-input-field>
+                <br />What are some growth opportunities for the student?
+                <lightning-input-field field-name="Reference_Question_9__c" variant="label-hidden"></lightning-input-field>
+                <br />Do you have any specific advice on how to work with the student?
+                <lightning-input-field field-name="Reference_Question_10__c" variant="label-hidden"></lightning-input-field>
+                <br />Do you have any reservations in recommending the student for this program?
+                <lightning-input-field field-name="Reference_Question_11__c" variant="label-hidden"></lightning-input-field>
+                <br /><br />
+                <lightning-input-field field-name="Reference_First_Name__c" value={teacherName} variant="label-stacked"></lightning-input-field>
+                <lightning-input-field field-name="Reference_Last_Name__c" variant="label-stacked"></lightning-input-field>
+                <lightning-input-field field-name="Reference_Email__c" variant="label-stacked"></lightning-input-field>
+                <lightning-input-field field-name="Reference_School_Name__c" variant="label-stacked"></lightning-input-field>
+                <lightning-input-field field-name="Reference_Mailing_Address__c" variant="label-stacked"></lightning-input-field>
+                <br />Yes, please add me to your email list for more information about Where There Be Dragons.
+                <lightning-input-field field-name="Email_List__c" variant="label-hidden"></lightning-input-field>
+                <br />Yes, please mail me a copy of the Where There Be Dragons catalog.
+                <br />
+                <lightning-input-field field-name="Catalog__c" variant="label-hidden"></lightning-input-field>
+                <lightning-button type="submit" label="SUBMIT"></lightning-button>
+            </lightning-record-edit-form>
+
+        </template>
+
+    </lightning-card>
+
+
+
+</template>

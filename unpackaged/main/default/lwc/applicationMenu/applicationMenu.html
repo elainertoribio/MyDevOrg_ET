@@ -1,0 +1,77 @@
+<!--
+* Name:     applicationPersonalInformation.hmtl
+* Author:   Strategic Growth, Inc. (www.strategicgrowthinc.com)
+* Date:     DEC 2020
+* ======================================================
+* ======================================================
+* Purpose: 	Community Menu
+* ======================================================
+* ======================================================
+* History:
+* VERSION   DATE            INITIALS    DESCRIPTION/FEATURES ADDED
+* 1.0       DEC 2020        GO          Initial Development
+ -->
+
+<!-- Application Menu -->
+<template>
+
+    <ul>
+        <ul>
+            <li>
+                <a class={isTab1On} href="application-personalinfo">
+                    <template if:true={isTab1Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">personal information</span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab0On} href="application-programs">
+                    <template if:true={isTab0Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">program</span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab2On} href="application-guardianinfo">
+                    <template if:true={isTab2Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">family information </span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab3On} href="application-medicalinfo">
+                    <template if:true={isTab3Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">medical information </span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab6On} href="application-shortanswer">
+                    <template if:true={isTab6Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">short answer questions</span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab7On} href="application-submit">
+                    <template if:true={isTab7Done}>
+                        <lightning-icon icon-name="utility:success" alternative-text="Success!"
+                                        title="success variant xx-small" size="xx-small"></lightning-icon>&nbsp;
+                    </template>
+                    <span class="slds-text-heading_small">review & submit</span>
+                </a>
+            </li>
+        </ul>
+    </ul>
+    
+    </template>

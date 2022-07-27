@@ -1,0 +1,28 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Onboarding Menu -->
+<template>
+    <ul>
+        <ul >
+            <li >
+                <a class={isTab1On} href="onboarding-application">
+                    <span class="slds-text-heading_small">my info</span>
+                </a>
+            </li>
+            <li>
+                <a class={isTab2On} href="onboarding-payments">
+                    <span class="slds-text-heading_small">payments</span>
+                </a>
+            </li>
+            <template if:true={canViewInterviewTab}>
+                <li><a class={isTab3On} href="onboardinginterview"><span class="slds-text-heading_small">schedule interview</span></a></li>
+            </template>
+            <li class="slds-text-heading_small"><a class={isTab7On} href="onboarding-requireddocuments">required documents</a></li>
+            <li class="slds-text-heading_small"><a class={isTab5On} href="onboarding-passportinfo">passport & visa</a></li>
+            <li class="slds-text-heading_small"><a class={isTab6On} href="onboarding-travel">travel</a></li>
+            <li class="slds-text-heading_small"><a class={isTab8On} href="onboarding-resources">resources & downloads</a></li>
+        </ul>
+    </ul>
+</template>

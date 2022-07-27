@@ -1,0 +1,125 @@
+<!--
+ - Created by MacBookPro on 1/19/21.
+ -->
+
+<!-- Application Programs -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <template if:true={hasBeenSubmitted}>
+        <div class="demo-only" style="padding:0.5rem;background-color:lightgoldenrodyellow;text-align: center;">
+            <div>
+                Application submitted on <lightning-formatted-date-time year="numeric" month="long" day="numeric" value={submittedDate}></lightning-formatted-date-time>.
+            </div>
+        </div>
+    </template>
+    <lightning-record-edit-form class="appform" object-api-name="Application__c" record-id={applicationId} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+        <lightning-card title="1st Choice Program">
+            <template if:true={canEditProgram}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">
+                        <lightning-combobox name="semester" label="Session" value={semester} placeholder="Select Session" options={optionsSession} onchange={handleChange_Semester} required="true" variant="label-stacked"></lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-2"></div>
+                    <div class="slds-size_1-of-2">
+                        &nbsp;<lightning-combobox name="session" label="Program" value={session} placeholder="Select Program" options={optionsProgram} required="true" onchange={handleFieldChange} variant="label-stacked"></lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-2"></div>
+                </div>
+                <!--
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1">
+                        &nbsp;<lightning-combobox name="programType" label="Program Type" value={programType} placeholder="Select Program Type" options={optionsType} onchange={handleChange} required="true"></lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        &nbsp;<lightning-combobox name="program" label="Program" value={program} placeholder="Select Program" options={optionsProgram} onchange={handleProgramChange} required="true"></lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        &nbsp;<lightning-combobox name="session" label="Session Date" value={session} placeholder="Select Session Date" options={optionsDate} required="true" onchange={handleFieldChange}></lightning-combobox>
+                    </div>
+                </div>
+                -->
+            </template>
+            <template if:true={isViewOnlyProgram}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-output-field field-name="Program_Applied__c" variant="label-stacked"></lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2"></div>
+                </div>
+                <lightning-button label="CHANGE" variant="brand" class="slds-m-left_x-small" onclick={handleEditProgram}></lightning-button>
+            </template>
+
+        </lightning-card>
+        <br /><br />
+        <lightning-card title="Alternate Programs">
+            <label class="slds-form-element__label">check here if you are only interested in your 1st choice program</label>
+            <lightning-input-field style="float:left" field-name="Only_Interested_in_1st_Choice_Program__c" variant="label-hidden" onclick={handle2ndChoiceChange} ></lightning-input-field>
+            <br/>
+            <br />
+            <template if:true={show2ndChoices}>
+                <!--<template if:true={canEditBackup}>-->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <lightning-combobox name="semesterBackup" label="2nd Choice Session" value={semesterBackup} placeholder="Select Session" options={optionsSession} onchange={handleChange_SemesterBackup} required="true" variant="label-stacked"></lightning-combobox>
+                        </div>
+                        <div class="slds-size_1-of-2"></div>
+                        <div class="slds-size_1-of-2">
+                            &nbsp;<lightning-combobox name="sessionBackup" label="2nd Choice Program" value={sessionBackup} placeholder="Select Program" options={optionsProgramBackup} required="true" onchange={handleFieldChange} variant="label-stacked"></lightning-combobox>
+                        </div>
+                        <div class="slds-size_1-of-2"></div>
+                    </div>
+                <!--</template>-->
+                <!--<template if:true={isViewOnlyBackup}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                                <lightning-output-field field-name="Backup_Session__c"></lightning-output-field>
+                            </div>
+                        </div>
+                    <lightning-button label="SELECT" variant="brand" class="slds-m-left_x-small" onclick={handleEditBackup}></lightning-button>
+                </template>-->
+                <br /><br /><br />
+                <!--<template if:true={canEditBackup2}>-->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <lightning-combobox name="semesterBackup2" label="3rd Choice Session" value={semesterBackup2} placeholder="Select Session" options={optionsSession} onchange={handleChange_SemesterBackup2} variant="label-stacked"></lightning-combobox>
+                        </div>
+                        <div class="slds-size_1-of-2"></div>
+                        <div class="slds-size_1-of-2">
+                            &nbsp;<lightning-combobox name="sessionBackup2" label="3rd Choice Program" value={sessionBackup2} placeholder="Select Program" options={optionsProgramBackup2} onchange={handleFieldChange} variant="label-stacked"></lightning-combobox>
+                        </div>
+                        <div class="slds-size_1-of-2"></div>
+                    </div>
+                <!--</template>-->
+                <!--<template if:true={isViewOnlyBackup2}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="X3rd_Choice_Program__c"></lightning-output-field>
+                        </div>
+                    </div>
+                    <lightning-button label="SELECT" variant="brand" class="slds-m-left_x-small" onclick={handleEditBackup2}></lightning-button>
+                </template>-->
+                <br /><br />
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <label class="slds-form-element__label">Anything you'd like to tell us about your alternate program choices?</label>
+                        <lightning-input-field field-name="X2nd_Choice_Program_Comments__c" variant="label-hidden"></lightning-input-field>
+                    </div>
+                </div>
+            </template>
+
+        </lightning-card>
+    </lightning-record-edit-form>
+    <center >
+    <template if:true={isEditable}>
+        <br /><br />
+        <lightning-button label="BACK" variant="brand" class="slds-m-left_x-small" onclick={goBack}></lightning-button>
+        <lightning-button label="SAVE" variant="brand" class="slds-m-left_x-small" onclick={handleSaveChanges}></lightning-button>
+        <lightning-button label="SAVE & NEXT" variant="brand" class="slds-m-left_x-small" onclick={handleSaveAndNext}></lightning-button>
+    </template>
+    </center>
+</template>

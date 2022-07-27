@@ -1,0 +1,19 @@
+<!--
+ - Created by MacBookPro on 2/11/21.
+ -->
+
+<!-- Admissions Deposit -->
+<template>
+    <lightning-card title="Deposit">
+    <template if:true={isDepositPending}>
+        <p class="smallCaps">to hold your space on the <b>{programApplied}</b> program, please submit an $850 deposit.</p>
+        <br />
+        <lightning-button label="Submit a Deposit" onclick={handlePayDeposit}></lightning-button>
+
+    </template>
+    <template if:true={isDepositRecd}>
+        <p class="smallCaps">we have received your deposit and your space is reserved on the <b>{programApplied}</b> program!</p>
+    </template>
+        <br /><br />
+    </lightning-card>
+</template>

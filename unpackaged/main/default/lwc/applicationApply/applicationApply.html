@@ -1,0 +1,27 @@
+<!-- Application Apply -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form class="appform" object-api-name="Application__c" record-id={applicationId} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+        <lightning-card title="Program of Interest">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2">
+                    <lightning-combobox name="semester" label="Session" value={semester} placeholder="Select Session" options={optionsSession} onchange={handleChange_Semester} required="true" variant="label-inline"></lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-2"></div>
+                <div class="slds-size_1-of-2">
+                    &nbsp;<lightning-combobox name="session" label="Program" value={session} placeholder="Select Program" options={optionsProgram} required="true" onchange={handleFieldChange} variant="label-inline"></lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-2"></div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <center>
+        <br /><br />
+        <lightning-button label="APPLY" variant="brand" class="slds-m-left_x-small" onclick={handleSaveChanges}></lightning-button>
+    </center>
+</template>

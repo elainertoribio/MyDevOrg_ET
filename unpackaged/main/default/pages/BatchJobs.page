@@ -1,0 +1,414 @@
+<!--
+****************************************************
+* Name:         BatchJobs
+* Author:       Strategic Growth, Inc. (www.strategicgrowthinc.com)
+* Date:         19 Nov 2020
+* ==================================================
+* ==================================================
+* Purpose:      ...
+*
+* ==================================================
+* ==================================================
+* History:
+* VERSION   DATE            INITIALS    DESCRIPTION/FEATURES ADDED
+* 1.0       19 Nov 2020     FMF     Initial Development
+* 
+****************************************************
+-->
+
+<apex:page id="BatchJobs"
+           controller="SG_VFC_BatchJobs"
+           lightningStylesheets="true"
+           docType="html-5.0" >
+
+	<style>
+        .showStatus {
+            position: absolute;
+            overflow: hidden;
+            top: 0px;
+            padding: 0;
+            margin: 0;
+            width: 90%;
+            height: 100%;
+            background: rgba( 255, 255, 255, 0.8 ); /* dimmed */
+            z-index: 1001;
+            visibility: visible;
+            display: block;
+        }
+        .hideStatus {
+            visibility: hidden;
+            display: none;
+        }
+        .animatedStatus {
+            display: block;
+            position: absolute;
+            top: 100px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 1002;
+        }
+
+        /* remove empty space at the top */
+        [name=skiplink] {
+            display: block;
+            height: 0;
+        }
+
+        .tertiaryPalette, .pbSubHeader {
+            background-color: blue!important;
+            color: white!important;
+        }
+        .dataCol SELECT {
+            min-width: 3em!important;
+        }
+        .dataCell {
+        	word-break: break-word;
+        }
+
+        .schedule {
+        	word-break: break-word;
+        }
+
+        .styleCompleted SPAN {
+        	background-color: green;
+        	color: white;
+        }
+        .styleHolding SPAN {
+        	background-color: lime;
+        }
+        .styleQueued SPAN {
+        	background-color: cyan;
+        }
+        .styleProcessing SPAN {
+        	background-color: yellow;
+        }
+        .styleWAITING SPAN {
+        	background-color: yellow;
+        }
+        .styleDELETED SPAN {
+        	background-color: red;
+        	color: white;
+        }
+        .failures {
+        	background-color: red;
+        	color: white;
+        }
+
+        .hiddenDialog {
+            width: 75%;
+            top: 100px;
+            position: absolute;
+            border: solid 1px gray;
+            z-index: 99;
+            left: 12%;
+            box-shadow: 5px 5px 10px 0px black;
+            display: none;
+        }
+        .scheduleDialog {
+            width: 75%;
+            top: 100px;
+            position: absolute;
+            border: solid 1px gray;
+            z-index: 99;
+            left: 12%;
+            box-shadow: 5px 5px 10px 0px black;
+            display: block;
+        }
+        .scheduleDialog DIV {
+            margin-bottom: 0px;
+        }
+        .scheduleButtonBar {
+            margin-left: 40%;
+        }
+
+        .dayType SPAN FIELDSET {
+            width: 98px;
+            float: left;
+        }
+
+        .dayOfWeek {
+            transform: translateY(-5px);
+        }
+
+        .dayOfMonthWeekSelection SPAN {
+            margin-left: -15px;
+        }
+
+        .disabledGrayed {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: .3;
+        }
+
+        .jobResultPanelHeader {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+    </style>
+
+	<apex:slds />
+
+	<div id="focusAtTop" />
+
+	<apex:form id="mainForm" >
+
+		<script>
+            // go to top of page in case there are error messages
+            window.scrollTo( 0, 0 );
+        </script>
+
+		<apex:pageMessages id="pgMsgs" />
+
+		<apex:actionStatus id="ajaxStatus" layout="block"
+		                   startStyleClass="showStatus" stopStyleClass="hideStatus" >
+			<apex:facet name="start">
+				<apex:image value="/img/loading32.gif" styleClass="animatedStatus" />
+			</apex:facet>
+		</apex:actionStatus>
+
+		<!-- {!targetClass} -->
+
+		<apex:outputPanel id="scheduleDialog"
+		                  styleClass="{! IF( targetClass = null || targetClass = '', 'hiddenDialog', 'scheduleDialog' ) }"
+		                  layout="block" >
+			<apex:pageBlock id="pbSchedule" title="Schedule" >
+				<apex:pageBlockSection id="pbsSchedule" columns="2" >
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Job Name" for="jobName" />
+						<apex:inputText id="jobName" value="{!jobName}" />
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem id="pbsiStartTime" >
+						<apex:outputLabel value="Preferred Start Time"
+						                  for="startTime"
+						                  rendered="{! frequency != 'Hourly' }" />
+						<apex:outputPanel layout="inline"
+						                  rendered="{! frequency != 'Hourly' }" >
+							<apex:selectList id="startTime" value="{!startTime}" size="1" >
+								<apex:selectOptions value="{!timeOptionList}" />
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem id="pbsiFrequency" >
+						<apex:outputLabel value="Frequency" for="frequency" />
+						<apex:selectRadio id="frequency" value="{!frequency}"
+						                  layout="pageDirection" >
+							<apex:actionSupport event="onchange" status="ajaxStatus"
+							                    reRender="pbsSchedule" >
+								<apex:param value="dayOfMonth" assignTo="{!dayType}" />
+							</apex:actionSupport>
+							<apex:selectOption itemValue="Hourly" itemLabel="Hourly" />
+							<apex:selectOption itemValue="Daily" itemLabel="Daily" />
+							<apex:selectOption itemValue="Weekly" itemLabel="Weekly" />
+							<apex:selectOption itemValue="Monthly" itemLabel="Monthly" />
+						</apex:selectRadio>
+					</apex:pageBlockSectionItem>
+
+					<apex:outputPanel layout="inline"
+					                  rendered="{! frequency == 'Weekly' }" >
+						<apex:pageBlockSectionItem id="pbsiRecurrencyWeekly" >
+							<apex:outputLabel value="Recurs" for="recurrency" />
+							<apex:selectCheckboxes id="recurrency" value="{!recurrency}"
+							                       layout="pageDirection" >
+								<apex:selectOption itemValue="1" itemLabel="Sunday" />
+								<apex:selectOption itemValue="2" itemLabel="Monday" />
+								<apex:selectOption itemValue="3" itemLabel="Tuesday" />
+								<apex:selectOption itemValue="4" itemLabel="Wednesday" />
+								<apex:selectOption itemValue="5" itemLabel="Thursday" />
+								<apex:selectOption itemValue="6" itemLabel="Friday" />
+								<apex:selectOption itemValue="7" itemLabel="Saturday" />
+							</apex:selectCheckboxes>
+						</apex:pageBlockSectionItem>
+					</apex:outputPanel>
+
+					<apex:outputPanel layout="inline" styleClass="dayType"
+					                  rendered="{! frequency == 'Monthly' }" >
+						<apex:outputPanel layout="inline" >
+							<apex:selectRadio id="frequency" value="{!dayType}"
+							                  layout="pageDirection" >
+								<apex:selectOption itemValue="dayOfMonth" itemLabel="On day" />
+								<apex:selectOption itemValue="dayOfWeek" itemLabel="On the" />
+								<apex:actionSupport event="onchange" status="ajaxStatus"
+								                    reRender="pbsSchedule" >
+									<apex:param value="" assignTo="{!dayOrdinal}" />
+								</apex:actionSupport>
+							</apex:selectRadio>
+
+							<!-- DAY OF MONTH SELECTION -->
+							<apex:outputPanel layout="block"
+							                  styleClass="dayOfMonthWeekSelection {! IF( dayType == 'dayOfMonth', '', 'disabledGrayed' ) }" >
+								<apex:outputPanel layout="inline" >
+									<apex:selectList id="dayOfMonth" value="{!dayOfMonth}" size="1" >
+										<apex:selectOptions value="{!dayOptionList}" />
+									</apex:selectList>
+									&nbsp;
+									<apex:outputLabel value="of every month" for="dayOfMonth" />
+								</apex:outputPanel>
+							</apex:outputPanel>
+
+							<!-- DAY OF WEEK SELECTION -->
+							<apex:outputPanel layout="block"
+							                  styleClass="dayOfMonthWeekSelection {! IF( dayType == 'dayOfWeek', '', 'disabledGrayed' ) }" >
+								<apex:outputPanel layout="inline" >
+									<apex:selectList id="dayOfWeek" value="{!dayOrdinal}" size="1" >
+										<apex:selectOption itemValue="#1" itemLabel="1st" />
+										<apex:selectOption itemValue="#2" itemLabel="2nd" />
+										<apex:selectOption itemValue="#3" itemLabel="3rd" />
+										<apex:selectOption itemValue="#4" itemLabel="4th" />
+										<apex:selectOption itemValue="L" itemLabel="last" />
+									</apex:selectList>
+									&nbsp;
+									<apex:selectList id="dayOfWeek2" value="{!dayOfWeek}" size="1" >
+										<apex:selectOption itemValue="1" itemLabel="Sunday" />
+										<apex:selectOption itemValue="2" itemLabel="Monday" />
+										<apex:selectOption itemValue="3" itemLabel="Tuesday" />
+										<apex:selectOption itemValue="4" itemLabel="Wednesday" />
+										<apex:selectOption itemValue="5" itemLabel="Thursday" />
+										<apex:selectOption itemValue="6" itemLabel="Friday" />
+										<apex:selectOption itemValue="7" itemLabel="Saturday" />
+									</apex:selectList>
+									&nbsp;
+									<apex:outputLabel value="of every month" for="dayOfWeek" />
+								</apex:outputPanel>
+							</apex:outputPanel>
+						</apex:outputPanel>
+
+					</apex:outputPanel>
+
+				</apex:pageBlockSection>
+
+				<apex:outputPanel styleClass="scheduleButtonBar" layout="block" >
+					<apex:commandButton value="Schedule"
+					                    action="{!scheduleClass}"
+					                    status="ajaxStatus"
+					                    reRender="mainForm" />
+					<apex:commandButton value="Cancel"
+					                    status="ajaxStatus"
+					                    reRender="mainForm" >
+						<apex:param name="targetClass" assignTo="{!targetClass}" value="" />
+					</apex:commandButton>
+				</apex:outputPanel>
+			</apex:pageBlock>
+
+		</apex:outputPanel>
+
+		<apex:pageBlock title="Batch Apex Classes" >
+
+			<apex:pageBlockSection title="Available Classes" columns="1" collapsible="false" >
+				<apex:outputPanel layout="block" >
+					<apex:outputLabel value="Batch Size" for="batchSize" />
+					&nbsp;
+					<apex:input type="number" id="batchSize" value="{!batchSize}"
+					            size="4" html-min="0" />
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1" collapsible="false" >
+
+				<apex:pageBlockTable var="c" value="{!classList}" >
+					<apex:column headerValue="Class Name" >
+						<apex:outputLink target="_blank" value="/{!c.ID}" >
+							<apex:outputText value="{!c.Name}" />
+						</apex:outputLink>
+					</apex:column>
+					<apex:column headerValue="Type" value="{!c.Body}" />
+					<apex:column headerValue="Immediate Execution" >
+						<apex:commandButton value="Run" action="{!executeClass}"
+						                    rendered="{! CONTAINS( c.Body, 'Batchable' ) }"
+						                    status="ajaxStatus"
+						                    reRender="mainForm" >
+							<apex:param name="targetClassForExecution" assignTo="{!targetClassForExecution}" value="{!c.Name}" />
+						</apex:commandButton>
+					</apex:column>
+					<apex:column headerValue="Scheduled Execution" >
+						<apex:commandButton value="Schedule"
+						                    rendered="{! CONTAINS( c.Body, 'Schedulable' ) }"
+						                    status="ajaxStatus"
+						                    reRender="mainForm" >
+							<apex:param name="targetClass" assignTo="{!targetClass}" value="{!c.Name}" />
+							<apex:param name="jobName" assignTo="{!jobName}" value="Scheduled {!c.Name}" />
+						</apex:commandButton>
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Scheduled Jobs" columns="1" collapsible="false" >
+				<apex:pageBlockTable var="c" value="{!cronList}" >
+					<apex:column headerValue="Job Name" >
+						<apex:outputLink target="_blank" value="/08e" >
+							<apex:outputText value="{!c.CronJobDetail.Name}" />
+						</apex:outputLink>
+					</apex:column>
+					<apex:column headerValue="Job Type" value="{!c.CronJobDetail.JobType}" />
+					<apex:column headerValue="Schedule" styleClass="schedule" >
+						<apex:outputText value="{! cronExpressionMap[ c.CronExpression ]}"
+						                 title="{!c.CronExpression}" />
+					</apex:column>
+					<!--
+					<apex:column value="{!c.CronExpression}" />
+					-->
+					<apex:column value="{!c.StartTime}" />
+					<apex:column value="{!c.EndTime}" />
+					<apex:column value="{!c.State}" styleClass="style{!c.State}" />
+					<apex:column value="{!c.PreviousFireTime}" />
+					<apex:column value="{!c.NextFireTime}" />
+					<apex:column headerValue="Schedule" >
+						<apex:commandButton value="Remove" action="{!removeSchedule}"
+						                    styleClass="slds-button slds-button_destructive"
+						                    status="ajaxStatus"
+						                    reRender="mainForm" >
+							<apex:param name="targetClass" assignTo="{!targetClass}" value="{!c.CronJobDetail.Name}" />
+						</apex:commandButton>
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Job Results" columns="1" collapsible="false" >
+				<apex:facet name="header" >
+					<apex:outputPanel styleClass="jobResultPanelHeader" >
+						<apex:outputText value="Job Results" />
+						<apex:commandButton value="Refresh" onclick="window.location.reload(true);" />
+					</apex:outputPanel>
+				</apex:facet>
+				<apex:pageBlockTable var="j" value="{!jobsList}" >
+					<apex:column headerValue="Apex Class" >
+						<apex:outputLink target="_blank" value="/apexpages/setup/listAsyncApexJobs.apexp" >
+							<apex:outputText value="{!j.ApexClass.Name}" />
+						</apex:outputLink>
+					</apex:column>
+					<apex:column value="{!j.CreatedDate}" />
+					<apex:column value="{!j.CreatedById}" />
+					<apex:column value="{!j.JobType}" />
+					<apex:column value="{!j.Status}" styleClass="style{!j.Status}" />
+					<apex:column headerValue="Failures" >
+						<apex:outputText value="{!j.NumberOfErrors}"
+						                 styleClass="{! IF( j.NumberOfErrors > 0, 'failures', '' ) }" />
+					</apex:column>
+					<apex:column headerValue="Batches Processed" >
+						<apex:outputText value="{!j.JobItemsProcessed} out of {!j.TotalJobItems}" />
+					</apex:column>
+					<apex:column value="{!j.CompletedDate}" />
+					<apex:column value="{!j.ExtendedStatus}" />
+					<!--
+					<apex:column headerValue="Action" >
+						<apex:commandButton value="Abort" action="{!abortJob}"
+											rendered="{! j.Status == 'Processing' || j.Status == 'Holding' }"
+											status="ajaxStatus"
+											reRender="mainForm" >
+							<apex:param name="targetClass" assignTo="{!targetClass}" value="{!j.ApexClass.Name}" />
+						</apex:commandButton>
+					</apex:column>
+					-->
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>

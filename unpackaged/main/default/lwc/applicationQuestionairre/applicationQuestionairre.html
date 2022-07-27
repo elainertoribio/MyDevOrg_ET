@@ -1,0 +1,40 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Questionairre -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsubmit={handleSubmit} onerror={handleError} onsuccess={handleSuccess}>
+        <lightning-messages></lightning-messages>
+        <lightning-card title="Questionairre">
+            <div class="slds-form-element">
+                <lightning-input-field field-name="Remote_Seldom_Visited_Place__c"></lightning-input-field>
+                <lightning-input-field field-name="Living_With_a_Family__c"></lightning-input-field>
+                <lightning-input-field field-name="Trekking_and_Wilderness_Exploration__c"></lightning-input-field>
+                <lightning-input-field field-name="Engaging_In_Learning_Service_Opportunity__c"></lightning-input-field>
+                <lightning-input-field field-name="Learning_About_Global_Issues__c"></lightning-input-field>
+                <lightning-input-field field-name="Working_on_an_Independent_Study_Project__c"></lightning-input-field>
+                <lightning-input-field field-name="Language_Study__c"></lightning-input-field>
+                <lightning-input-field field-name="Comparative_Religion__c"></lightning-input-field>
+                <lightning-input-field field-name="Learning_Through_Experience__c"></lightning-input-field>
+                <lightning-input-field field-name="Learning_Through_Traditional_Models__c"></lightning-input-field>
+            </div>
+        </lightning-card>
+        <br />
+        <center>
+            <lightning-button label="BACK" onclick={doGoBack} title="Non-primary action"></lightning-button>
+            &nbsp;
+            <lightning-button label="SAVE" type="submit" title="Non-primary action"></lightning-button>
+            &nbsp;
+            <lightning-button label="SAVE & NEXT" onclick={doSaveAndNext} title="Non-primary action" variant="brand"></lightning-button>
+        </center>
+    </lightning-record-edit-form>
+    <br />
+
+</template>

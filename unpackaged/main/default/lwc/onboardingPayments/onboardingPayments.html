@@ -1,0 +1,78 @@
+<!--
+ - Created by MacBookPro on 1/5/21.
+ -->
+
+<!-- Onboarding Payments -->
+<template>
+    <lightning-record-view-form object-api-name="Application__c" record-id={applicationId}>
+        <template if:true={showPaymentComment}>
+            <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: #fafad2; color: #b22222 !important;">
+                <br />
+                <lightning-output-field variant="label-hidden" field-name="Payment_Comment_To_Applicant__c"></lightning-output-field>
+                <br />
+            </div>
+            <br />
+        </template>
+
+        <lightning-card title="Payments">
+            <span class="smallCaps">full payment for your course is due by: <b><lightning-formatted-date-time value={finalPaymentDueDate}></lightning-formatted-date-time> </b></span>
+        </lightning-card>
+        <br />
+        <lightning-card title="Overview">
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Total_Cost__c"></lightning-output-field>
+                <lightning-output-field field-name="Payments__c"></lightning-output-field>
+                <lightning-output-field field-name="Remaining_Balance__c"></lightning-output-field>
+            </div>
+            <br />
+            <span class="smallCaps">dragons offers a <b><lightning-formatted-number value={serviceFee} format-style="currency" currency-code="USD"></lightning-formatted-number></b>&nbsp;
+            discount for full tuition payments made by check or bank transfer.  if you choose to submit payment by check or bank transfer, please deduct this amount
+            from your remaining balance.</span>
+        </lightning-card>
+        <br />
+        <lightning-card title="Costs">
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Program_Tuition__c"></lightning-output-field>
+                <lightning-output-field field-name="Program_Group_Flight_Cost__c"></lightning-output-field>
+                <lightning-output-field field-name="Program_ISOS_Insurance_Cost__c"></lightning-output-field>
+                <lightning-output-field field-name="Program_Payment_Service_Fee__c"></lightning-output-field>
+                <template if:true={costs}>
+                    <template for:each={costs} for:item="c" for:index="index">
+                        <div key={c.Id} class="slds-form-element slds-form-element__horizontal">
+                            <span class="slds-form-element__label" key={c.Id}>&nbsp;{c.Name}</span>
+                            <div class="slds-form-element__control" key={c.Id}>
+                                <lightning-formatted-number value={c.Amount__c} format-style="currency" currency-code="USD" class="slds-form-element__static"></lightning-formatted-number>
+                                <slot lightning-outputfield_outputfield=""></slot>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                <br />
+                <lightning-output-field field-name="Total_Cost__c"></lightning-output-field>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Payments & Credits">
+            <template if:true={payments}>
+                <template for:each={payments} for:item="p" for:index="index">
+                    <div key={p.Id} class="slds-form-element slds-form-element__horizontal">
+                        <span class="slds-form-element__label" key={p.Id}>&nbsp;{p.Name}</span>
+                        <div class="slds-form-element__control" key={p.Id}>
+                            <lightning-formatted-number value={p.Amount__c} format-style="currency" currency-code="USD" class="slds-form-element__static"></lightning-formatted-number>
+                            <slot lightning-outputfield_outputfield=""></slot>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <br /><br />
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Payments__c"></lightning-output-field>
+            </div>
+        </lightning-card>
+
+
+
+
+
+    </lightning-record-view-form>
+</template>

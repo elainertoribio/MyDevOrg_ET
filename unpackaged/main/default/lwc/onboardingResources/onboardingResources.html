@@ -1,0 +1,32 @@
+<!--
+ - Created by MacBookPro on 1/12/21.
+ -->
+
+<!-- Onboarding Resources -->
+<template>
+    <lightning-card title="Resources">
+        <lightning-record-view-form object-api-name="Program_Session__c" record-id={programId}>
+            <lightning-output-field variant="label-stacked" field-name="Yak_Board_URL__c"></lightning-output-field>
+            <lightning-output-field variant="label-stacked" field-name="Webinar__c"></lightning-output-field>
+           <!-- <template if:true={Additional_Resources__c}>-->
+                <lightning-output-field variant="label-stacked" field-name="Additional_Resources__c"></lightning-output-field>
+            <!--</template>-->
+        </lightning-record-view-form>
+    </lightning-card>
+    <br />
+    <lightning-card  variant="Narrow"  title="Downloads">
+
+        <div class="slds-var-p-around_small">
+            <lightning-datatable hide-table-header="true"
+                    key-field="id"
+                    data={dataList}
+                    hide-checkbox-column
+                    columns={columnsList}
+                    onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

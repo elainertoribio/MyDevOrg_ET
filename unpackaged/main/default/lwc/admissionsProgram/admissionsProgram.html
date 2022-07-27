@@ -1,0 +1,23 @@
+<!--
+ - Created by MacBookPro on 2/11/21.
+ -->
+
+<!-- Admissions Program -->
+<template>
+    <lightning-card title="Program">
+        <p class="smallCaps">you are applying to the <b>{programApplied}</b> program.</p>
+        <br />
+        <!--<p>If your first choice program is unavailable, we will contact you about moving to your second or third choice program.</p><br />-->
+        <p class="smallCaps">
+            <b>SECOND CHOICE PROGRAM:</b><br />
+            {backupSession}
+        </p>
+        <br />
+        <p class="smallCaps">
+            <b>THIRD CHOICE PROGRAM:</b><br />
+            {backup2Session}
+        </p>
+        <br />
+    </lightning-card>
+
+</template>

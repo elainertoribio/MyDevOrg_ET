@@ -1,0 +1,58 @@
+<!--
+ - Created by MacBookPro on 2/1/21.
+ -->
+
+<!-- Application List -->
+<template>
+    <lightning-card>
+        <h1 slot="title">
+            <lightning-icon icon-name="action:record" size="small"></lightning-icon> My Applications
+        </h1>
+    </lightning-card>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+    </template>
+    <br /><br />
+    <template if:true={applications}>
+        <div class="slds-grid slds-wrap">
+            <template for:each={applications} for:item="app" for:index="index">
+                <div class="slds-size_1-of-3 slds-max-small-size_1-of-1 appCard" key={app.Id}>
+
+                    <lightning-card >
+                        <div class="appCard2">
+                        <h4>{app.Program_Name_formula__c}</h4>
+                        </div>
+                        <lightning-record-view-form object-api-name="Application__c" record-id={app.Id} key={app.Id}>
+                            <div>
+                                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                                    <lightning-output-field field-name="Application_Status_Community__c"></lightning-output-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                                    <lightning-output-field field-name="Program_Start_Date__c"></lightning-output-field>
+                                </div>
+                                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                                    <lightning-output-field field-name="Program_End_Date__c"></lightning-output-field>
+                                </div>
+                             </div>
+                        </lightning-record-view-form>
+                        <br />
+                        <center>
+                            <template if:true={app.Can_View_Community__c}>
+                                <lightning-button label="VIEW" title="Non-primary action" class="slds-m-left_x-small" onclick={viewApplication} name={app.Id} value={app.Community_View__c}></lightning-button>
+                            </template>
+                        </center>
+
+                    </lightning-card>
+
+                </div>
+            </template>
+        </div>
+    </template>
+    <br /><br />
+    <center>
+        <lightning-button label="APPLY TO NEW PROGRAM" title="Non-primary action" class="slds-m-left_x-small" onclick={createApp}></lightning-button>
+    </center>
+    <br /><br />
+</template>

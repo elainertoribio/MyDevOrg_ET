@@ -1,0 +1,26 @@
+<!-- Onboarding Travel -->
+<template>
+    <lightning-card title="Connecting Travel Information">
+        <lightning-record-view-form object-api-name="Program_Session__c" record-id={programId}>
+            <label class="slds-form-element__label">Planning your travel to:</label>
+            <lightning-output-field field-name="Departure_Hub__c" variant="label-hidden"></lightning-output-field>
+            <label class="slds-form-element__label">Please plan to arrive by:</label>
+            <lightning-output-field field-name="Departure_Hub_DateTime__c" variant="label-hidden"></lightning-output-field>
+            <br /><br />
+            <label class="slds-form-element__label">Planning your travel home from:</label>
+            <lightning-output-field field-name="Return_Hub__c" variant="label-hidden"></lightning-output-field>
+            <label class="slds-form-element__label">Please plan to depart after:</label>
+            <lightning-output-field field-name="Return_Hub_DateTime__c" variant="label-hidden"></lightning-output-field>
+            <br /><br />
+            <label class="slds-form-element__label">After arranging your travel to meet up with your program, please fill out the Connecting Travel Questionnaire:</label>
+            <lightning-output-field field-name="Connecting_Travel_URL__c" variant="label-hidden"></lightning-output-field>
+            <br /><br />
+            <lightning-output-field field-name="Intl_Group_Flight_Info__c" variant="label-hidden"></lightning-output-field>
+
+            <template if:true={connectingTravelInfoReceived}>
+                <span class="smallCaps">your connecting travel information has been received. to make changes to your connecting travel plans, please email <a href="mailto:info@wheretherebedragons.com">info@wheretherebedragons.com</a> </span>
+            </template>
+        </lightning-record-view-form>
+
+    </lightning-card>
+</template>

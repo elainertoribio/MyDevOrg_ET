@@ -1,0 +1,202 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Submit -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-record-edit-form object-api-name="Contact" record-id={contactId}>
+        <lightning-card title="Student Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="FirstName"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="LastName"></lightning-output-field>
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Preferred_Name__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Birthdate"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field  field-name="Pronoun__c"></lightning-output-field>
+                </div>
+
+
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Contact Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingStreet"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingCity"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingState"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingPostalCode"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingCountry"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="HomePhone"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MobilePhone"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card title="Passport Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Has_Valid_Passport__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Passport_Country__c"></lightning-output-field>
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Passport_ID_Number__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Passport_Expiration_Date__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="School Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Name__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Graduation_Date__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Address__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_City__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_State__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Postal_Code__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+    <template if:true={relationships}>
+        <template for:each={relationships} for:item="rel" for:index="index">
+            <lightning-card title="Guardian Info" key={rel.Id}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text value={rel.First_Name__c} name="firstname" variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Last_Name__c} variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Email__c} variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Mobile_Phone__c} variant="label-stacked" name="mobile"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Home_Phone__c} variant="label-stacked" name="home"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  label="Relationship To Student" value={rel.Contact2_Role__c} ></lightning-formatted-text >
+                    </div>
+                </div>
+            </lightning-card>
+            <br key={rel.Id} />
+        </template>
+    </template>
+    <br />
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsuccess={handleSuccess} onerror={handleError} onsubmit={handleSubmit}>
+        <lightning-messages></lightning-messages>
+        <lightning-card title="Medical Info">
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Sports_Activities__c"></lightning-output-field>
+                <lightning-output-field field-name="Swim_Ability__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Can_Tread_Water__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Has_Smoked_Tobacco_User__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Has_Issues_Preventing_Physical_Activity__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Reason_Preventing_Physical_Activity__c"></lightning-output-field>
+                <lightning-output-field field-name="Medical_Issues__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Respiratory_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Respiratory_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Asthma_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Circulatory_Problems_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Blood_Pressure_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Muscular_Injury_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Joint_Injury_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Orthopedic_Skeletal_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Chronic_Injury_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Has_Migraines__c"></lightning-output-field>
+                <lightning-output-field field-name="Has_Had_Seizures__c"></lightning-output-field>
+                <lightning-output-field field-name="Seizure_Explanation__c"></lightning-output-field>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Allergies & Dietary Info">
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Allergies__c"></lightning-output-field>
+                <lightning-output-field field-name="Specify_Food_Allergies__c"></lightning-output-field>
+                <lightning-output-field field-name="Specify_Insect_Bites_Sting_Allergies__c"></lightning-output-field>
+                <lightning-output-field field-name="Specify_Medication_Allergies__c"></lightning-output-field>
+                <lightning-output-field field-name="Other_Allergies_Details__c"></lightning-output-field>
+                <lightning-output-field field-name="Dietary_Restrictions__c"></lightning-output-field>
+                <lightning-output-field field-name="Other_Dietary_Restrictions__c"></lightning-output-field>
+            </div>
+
+        </lightning-card>
+        <br />
+        <lightning-card title="Teacher References">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Name__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Email__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Short Answer Topics">
+            <div class="slds-form-element">
+                <lightning-output-field field-name="Why_Did_You_Choose_To_Apply_to_Dragons__c"></lightning-output-field>
+                <lightning-output-field field-name="What_Are_You_Most_Excited_Nervous_About__c"></lightning-output-field>
+                <lightning-output-field field-name="How_Do_You_Do_In_Group_Setting__c" required="true"></lightning-output-field>
+                <lightning-output-field field-name="Questions_From_Applicant__c"></lightning-output-field>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+</template>

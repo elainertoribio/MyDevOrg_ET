@@ -1,0 +1,22 @@
+<!--
+ - Created by MacBookPro on 1/6/21.
+ -->
+
+<!-- Onboarding Reference -->
+<template>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card title="Teacher Reference Information">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Status__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Name__c"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Email__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+</template>

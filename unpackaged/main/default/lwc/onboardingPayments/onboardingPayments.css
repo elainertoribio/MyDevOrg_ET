@@ -1,0 +1,11 @@
+/**
+ * Created by MacBookPro on 2/9/21.
+ */
+
+.slds-form-element__icon { /* Replace this class name "slds-form-element__icon" by your finding. */
+    display:none !important;
+}
+
+.smallCaps{
+    font-variant: small-caps;
+}

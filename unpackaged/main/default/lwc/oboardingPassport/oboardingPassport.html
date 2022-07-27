@@ -1,0 +1,135 @@
+<!--
+ - Created by MacBookPro on 1/6/21.
+ -->
+
+<!-- Oboarding Passport -->
+<template>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card title="Passport Information">
+            <div class="slds-grid slds-wrap">
+                <template if:true={hasPassportComments}>
+                    <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: firebrick !important;padding: 10px;">
+                        <lightning-output-field variant="label-hidden" field-name="Passport_Comments_To_Applicant__c"></lightning-output-field>
+                    </div>
+                    <br />
+                </template>
+                <!--
+                <lightning-icon icon-name="action:close" alternative-text="Pending" title="success variant xx-small"
+                                size="xx-small"></lightning-icon>&nbsp;Pending
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <lightning-icon icon-name="action:priority" alternative-text="Received" title="success variant xx-small"
+                                size="xx-small"></lightning-icon>&nbsp;Received
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <lightning-icon icon-name="action:approval" alternative-text="Approved!" title="success variant xx-small"
+                                size="xx-small"></lightning-icon>&nbsp;Approved
+                <br /><br />
+                -->
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" >
+                    <lightning-input-field field-name="Passport_ID_Number__c" ></lightning-input-field>
+                </div>
+
+                <div class="slds-size_2-of-6" >
+                    <label for="expDate" class="slds-form-element__label" style="margin-left: 3px;">Passport Expiration Date</label>
+                    <span class="slds-form-element__help" id="error-message-id-49"><span style="font-variant: small-caps;">your passport must be valid through <span >{minimumPassportValidity}</span></span></span>
+                </div>
+                <div class="slds-size_4-of-6" style="margin-left: -2px;">
+                    <lightning-input-field id="expDate" field-name="Passport_Expiration_Date__c" variant="label-hidden" ></lightning-input-field>
+                                    </div>
+                <div class="slds-size_2-of-6">
+                    <label for="givenNames" class="slds-form-element__label" style="margin-left: 3px">Given Names, as written on passport</label>
+                </div>
+                <div class="slds-size_4-of-6" style="margin-left: -2px;">
+                    <lightning-input-field id="givenNames" field-name="Passport_Given_Name__c" variant="label-hidden"></lightning-input-field>
+                </div>
+                <div class="slds-size_2-of-6 slds-m-top_medium">
+                    <label for="givenSurname" class="slds-form-element__label" style="margin-left: 3px;">Surname, as written on passport</label>
+                </div>
+                <div class="slds-size_4-of-6 slds-m-top_medium" style="margin-left: -2px;">
+                    <lightning-input-field id="givenSurname" field-name="Passport_Given_Surname__c" variant="label-hidden" ></lightning-input-field>
+                </div>
+                <div class="slds-size_2-of-6 slds-m-top_medium">
+                    <label for="passportCountry" class="slds-form-element__label" style="margin-left: 3px;">Passport country</label>
+                </div>
+                <div class="slds-size_4-of-6 slds-m-top_medium" style="margin-left: -2px;">
+                    <lightning-input-field id="passportCountry" field-name="Passport_Country__c" variant="label-hidden" ></lightning-input-field>
+                </div>
+                <div class="slds-m-top_medium">
+                    <template if:true={isPassportScanPending}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:close" alternative-text="Not yet received" title="Pending Upload"
+                                            size="xx-small"></lightning-icon> passport copy - not yet received</p>
+                    </template>
+                    <template if:true={isPassportScanReceived}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:priority" alternative-text="In Approval" title="Scan Received, Pending Approval"
+                                            size="xx-small"></lightning-icon> passport copy - awaiting approval</p>
+                    </template>
+                    <template if:true={isPassportScanApproved}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Scan Approved"
+                                            size="xx-small"></lightning-icon> passport copy - approved</p>
+                    </template>
+                    <div class="slds-size_1-of-1 slds-max-small-size_1-of-1 slds-m-top_small">
+                        <lightning-file-upload
+                                label="Passport Scan"
+                                name="Passport_Scan"
+                                accept={acceptedFormats}
+                                record-id={applicationId}
+                                file-field-name="Dragon_File_Type_fileupload__c"
+                                file-field-value="Passport Scan"
+                                onuploadfinished={handleUploadFinished}
+                                class="smallCaps"
+                                multiple>
+                        </lightning-file-upload>
+
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Visa Information">
+            <div class="slds-grid slds-wrap">
+                <template if:true={hasVisaComments}>
+                    <div class="slds-size_1-of-1 slds-max-small-size_1-of-1" style="background-color: lightgoldenrodyellow; color: firebrick !important;padding: 10px;">
+                        <lightning-output-field variant="label-hidden" field-name="Visa_Comments_To_Applicant__c"></lightning-output-field>
+                    </div>
+                    <br />
+                </template>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-input-field field-name="Visa_ID_Number__c"></lightning-input-field>
+                </div>
+                <div class="slds-size_1-of-1 slds-max-small-size_1-of-1">
+                    <lightning-input-field field-name="Visa_Expiration_Date__c"></lightning-input-field>
+                </div>
+                <div class="slds-m-top_medium">
+                    <template if:true={isVisaScanPending}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:close" alternative-text="Not yet received" title="Pending Upload"
+                                        size="xx-small"></lightning-icon> visa copy - not yet received</p>
+                    </template>
+                    <template if:true={isVisaScanReceived}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:priority" alternative-text="Received" title="Scan Received, Pending Approval"
+                                        size="xx-small"></lightning-icon> visa copy - awaiting approval</p>
+                    </template>
+                    <template if:true={isVisaScanApproved}>
+                        <p class="smallCaps"><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Scan Approved"
+                                        size="xx-small"></lightning-icon> visa copy - approved</p>
+                    </template>
+                    <div class="slds-m-top_small">
+                        <lightning-file-upload
+                                label="Visa Scan"
+                                name="Visa_Scan"
+                                accept={acceptedFormats}
+                                record-id={applicationId}
+                                file-field-name="Dragon_File_Type_fileupload__c"
+                                file-field-value="Visa Scan"
+                                onuploadfinished={handleUploadFinished}
+                                class="smallCaps"
+                                multiple>
+                        </lightning-file-upload>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <center>
+        <lightning-button type="submit" label="SAVE" ></lightning-button>
+        </center>
+    </lightning-record-edit-form>
+</template>

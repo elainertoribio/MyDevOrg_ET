@@ -1,0 +1,267 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Application Submit -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+
+
+    <template if:true={hasBeenSubmitted}>
+        <div class="demo-only" style="padding:0.5rem;background-color:lightgoldenrodyellow;text-align: center;">
+            <div class="smallCaps">
+                application submitted on <lightning-formatted-date-time year="numeric" month="long" day="numeric" value={submittedDate}></lightning-formatted-date-time>.
+            </div>
+        </div>
+        <br />
+    </template>
+    <lightning-record-edit-form object-api-name="Contact" record-id={contactId}>
+        <lightning-card title="Student Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="FirstName" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="LastName" variant="label-stacked"></lightning-output-field>
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Preferred_Name__c" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Birthdate" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field  field-name="Pronoun__c" variant="label-stacked"></lightning-output-field>
+                </div>
+
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Contact Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingStreet" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingCity" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingState" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingPostalCode" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MailingCountry" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                </div>
+
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="HomePhone" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="MobilePhone" variant="label-stacked"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card title="Passport Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Has_Valid_Passport__c" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Passport_Country__c" variant="label-stacked"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="School Info">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Name__c" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="High_School_Graduation_Date__c" variant="label-stacked"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+    <template if:true={relationships}>
+        <template for:each={relationships} for:item="rel" for:index="index">
+            <lightning-record-edit-form object-api-name="Relationship__c" record-id={rel.Id} key={rel.Id}>
+                <lightning-card title="Guardian Info" key={rel.Id}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="First_Name__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Last_Name__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Email__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Mobile_Phone__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Home_Phone__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Contact2_Role__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Other_Relationship__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                            <lightning-output-field field-name="Opt_Out__c" variant="label-stacked"></lightning-output-field>
+                        </div>
+                    </div>
+                </lightning-card>
+            </lightning-record-edit-form>
+
+
+                <!--<div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text value={rel.First_Name__c} name="firstname" variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Last_Name__c} variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Email__c} variant="label-stacked"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Mobile_Phone__c} variant="label-stacked" name="mobile"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  value={rel.Home_Phone__c} variant="label-stacked" name="home"></lightning-formatted-text >
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        <lightning-formatted-text  label="Relationship To Student" value={rel.Contact2_Role__c} ></lightning-formatted-text >
+                    </div>
+                </div>-->
+
+            <br key={rel.Id} />
+        </template>
+    </template>
+    <br />
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId} onsuccess={handleSuccess} onerror={handleError} onsubmit={handleSubmit}>
+        <lightning-messages></lightning-messages>
+        <lightning-card title="Medical Info">
+            <div class="slds-form-element">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label"> What is your t-shirt size?</label>
+                    <lightning-output-field field-name="T_Shirt__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">Do you currently particpate in any sports or physical activities? What kinds? How often?</label>
+                    <lightning-output-field id="fldActivities2" field-name="Sports_Activities__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">What is your swimming ability?</label>
+                    <lightning-output-field field-name="Swim_Ability__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">Please select any medical issues. To select "None," scroll to the bottom of the list.<br /></label>
+                    <lightning-output-field field-name="Medical_Issues__c" class="slds-show_inline-block" variant="label-hidden"></lightning-output-field>
+                    <br /><br />
+                    <label class="slds-form-element__label">If you selected any medical issues, please provide details here.</label>
+                    <lightning-output-field field-name="Medical_Details__c" variant="label-hidden"></lightning-output-field>
+                    <br />
+                    <label class="slds-form-element__label">Is there anything in your background that might make it challenging for you to fully participate on the program?</label>
+                    <lightning-output-field field-name="Health_and_Physical_Activity_Details__c" variant="label-hidden"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+        <br />
+        <lightning-card title="Allergies & Dietary Info">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Do you have any allergies? To select "none," please scroll to the bottom of the list.</label>
+                <lightning-output-field field-name="Allergies__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">If you selected any allergies, please provide details here.</label>
+                <lightning-output-field field-name="Allergy_Details__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">Do you have any dietary restrictions? To select "None," please scroll to the bottom of the list.</label>
+                <lightning-output-field field-name="Dietary_Restrictions__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">Please provide any additional details about your dietary restrictions.</label>
+                <lightning-output-field field-name="Dietary_Restriction_Details__c" variant="label-hidden"></lightning-output-field>
+            </div>
+
+        </lightning-card>
+        <br />
+       <!-- <lightning-card title="Reference (Optional)">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Name__c" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Teacher_Reference_Email__c" variant="label-stacked"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-card>
+        <br />-->
+        <lightning-card title="Short Answer Topics">
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Why did you choose to apply to Dragons?<span class="slds-required">*</span></label>
+                <lightning-output-field class="slds-required" field-name="Why_Did_You_Choose_To_Apply_to_Dragons__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">What aspects of your program are the most exciting? What makes you feel nervous?<span class="slds-required">*</span></label>
+                <lightning-output-field field-name="What_Are_You_Most_Excited_Nervous_About__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">How do you participate in group settings? How do you feel about traveling with a small group of students and instructors for an extended period of time?</label>
+                <span class="slds-required">*</span>
+                <lightning-output-field field-name="How_Do_You_Do_In_Group_Setting__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">What questions do you have about your program?</label>
+                <span class="slds-required">*</span><lightning-output-field field-name="Questions_From_Applicant__c" variant="label-hidden"></lightning-output-field>
+
+            </div>
+        </lightning-card>
+        <br/>
+        <lightning-card title="OPTIONAL DEMOGRAPHIC QUESTIONS">
+            <p class="slds-form-element__label">
+                the following questions are voluntary and have no bearing on your application. data collected through these questions is used to inform and improve justice, equity, diversity, and inclusion (JEDI) initiatives at dragons. 
+            </p><br/>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">What racial or ethnic group/s do you most closely identify with? please scroll and select as many as apply to you.</label>
+                <lightning-output-field field-name="racial_or_ethnic_group__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">If you selected “Prefer to self-describe,” please do so here: </label>
+                <lightning-output-field field-name="racial_Prefer_to_self_describe__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">Do you identify as a first generation college student? </label>
+                <lightning-output-field field-name="Identify_as_a_first_generation_college__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">What type of high school do/did you attend? </label>
+                <lightning-output-field field-name="Type_of_High_School_Attended__c" variant="label-hidden"></lightning-output-field>
+                <br />
+                <label class="slds-form-element__label">If “other,” please specify:</label>
+                <lightning-output-field field-name="other_type_of_high_school__c" variant="label-hidden"></lightning-output-field>
+                <br />
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+    <center>
+        <template if:true={canSubmit}>
+            <lightning-button label="SUBMIT" onclick={handleSubmit} variant="brand" title="Non-primary action" class="slds-m-left_x-small" ></lightning-button>       &nbsp;
+        </template>
+    </center>
+</template>

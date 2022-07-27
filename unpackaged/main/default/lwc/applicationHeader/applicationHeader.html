@@ -1,0 +1,40 @@
+<!--
+ - Created by MacBookPro on 12/9/20.
+ -->
+
+<!-- Application Header -->
+<template>
+    <lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}>
+        <lightning-card>
+            <h1 slot="title">
+                <lightning-icon icon-name="action:record" size="small"></lightning-icon>
+                {title}
+                <!--<template if:true={isApplicationPhase}>
+                    My Application
+                </template>
+                <template if:true={isPrecoursePhase}>
+                    Pre-Course
+                </template>-->
+            </h1>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-4 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Student_Name_Formula__c" variant="label-stacked" ></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-4 slds-max-small-size_1-of-1">
+                    <lightning-output-field id="fldStatus" field-name="Application_Status_Community__c" variant="label-stacked"></lightning-output-field>
+                </div>
+                <div class="slds-size_1-of-4 slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Program_Name_formula__c" variant="label-stacked" ></lightning-output-field>
+                </div>
+
+                <div class="slds-size_1-of-4  slds-max-small-size_1-of-1">
+                    <lightning-output-field field-name="Session__c" variant="label-stacked" ></lightning-output-field>
+                </div>
+
+            </div>
+
+        </lightning-card>
+    </lightning-record-edit-form>
+
+</template>

@@ -1,0 +1,81 @@
+<!--
+ - Created by MacBookPro on 12/10/20.
+ -->
+
+<!-- Apply -->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+
+    <lightning-record-edit-form object-api-name="Contact" >
+        <lightning-card title="Create A MyDragons Account">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input label="Participant First Name" name="firstname" value={firstname} variant="label-stacked" required="true" onblur={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input label="Participant Last Name" name="lastname" value={lastname} variant="label-stacked" required="true" onblur={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input type="email" label="Participant Email" name="email" value={email} variant="label-stacked" required="true" onblur={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input type="email" label="Confirm Email" name="confirmEmail" value={confirmEmail} variant="label-stacked" required="true" onblur={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-1">
+                    &nbsp;
+                </div>
+                <div class="slds-size_1-of-1" style="background-color: lightgoldenrodyellow; padding: 10px; ">
+                    Password must be at least 8 characters and must include alpha and numeric characters.
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input type="password" label="Password" name="password" value={password} variant="label-stacked"
+                                     required="true" onblur={handleFieldChange} pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\D]{8,}$"></lightning-input>
+                    <!--  ^[a-zA-Z0-9] -->
+                </div>
+                <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                    <lightning-input type="password" label="Confirm Password" name="confirmPassword" value={confirmPassword} variant="label-stacked" required="true" onblur={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-1">
+                    <br />&nbsp; Already have an account?  <a href="https://sgdev1-wheretherebedragonscommunity.cs97.force.com/mydragons/s/login">Sign In</a>
+                </div>
+            </div>
+        </lightning-card>
+    </lightning-record-edit-form>
+    <br />
+
+    <lightning-card title="Program of Interest">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1">
+                <lightning-combobox name="semester" label="Session" value={semester} placeholder="Select Session" options={optionsSession} onchange={handleChange_Semester} required="true"></lightning-combobox>
+            </div>
+            <div class="slds-size_1-of-1">
+                &nbsp;<lightning-combobox name="session" label="Program" value={session} placeholder="Select Program" options={optionsProgram} required="true" onchange={handleFieldChange}></lightning-combobox>
+            </div>
+        </div>
+    </lightning-card>
+    <!--
+    <lightning-card title="Program of Interest">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1">
+                &nbsp;<lightning-combobox name="programType" label="Program Type" value={programType} placeholder="Select Program Type" options={optionsType} onchange={handleChange} required="true"></lightning-combobox>
+            </div>
+            <div class="slds-size_1-of-1">
+                &nbsp;<lightning-combobox name="program" label="Program" value={program} placeholder="Select Program" options={optionsProgram} onchange={handleProgramChange} required="true"></lightning-combobox>
+            </div>
+            <div class="slds-size_1-of-1">
+                &nbsp;<lightning-combobox name="session" label="Session Date" value={session} placeholder="Select Session Date" options={optionsDate} required="true" onchange={handleFieldChange}></lightning-combobox>
+            </div>
+        </div>
+    </lightning-card>
+    -->
+    <br />
+    <center>
+        <lightning-button label="Apply" variant="brand" class="slds-m-left_x-small" onclick={handleSubmit}></lightning-button>       &nbsp;
+    </center>
+</template>
