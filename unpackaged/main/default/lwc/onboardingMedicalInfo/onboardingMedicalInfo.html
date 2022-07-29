@@ -141,7 +141,7 @@
                             accept={acceptedFormats}
                             record-id={applicationId}
                             file-field-name="Dragon_File_Type_fileupload__c"
-                            file-field-value="Liability Form"
+                            file-field-value={fileNameLiabilityForm}
                             onuploadfinished={handleUploadFinished}
                             multiple>
                     </lightning-file-upload>
@@ -150,15 +150,15 @@
                 <br/><br/>
                 <!-- Course Wellness Plan upload card -->
                 <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
-                    <template if:true={redRuleFormPending}>
+                    <template if:true={courseWellnessPlanPending}>
                         <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
                                            size="xx-small"></lightning-icon> Course Wellness Plan - Awaiting Upload</p>
                     </template>
-                    <template if:true={redRuleFormRec}>
+                    <template if:true={courseWellnessPlanRec}>
                         <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
-                                           size="xx-small"></lightning-icon> Course Wellness Plant - Upload Received, Approval Pending</p>
+                                           size="xx-small"></lightning-icon> Course Wellness Plan - Upload Received, Approval Pending</p>
                     </template>
-                    <template if:true={redRuleFormApproved}>
+                    <template if:true={courseWellnessPlanApproved}>
                         <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
                                            size="xx-small"></lightning-icon> Course Wellness Plan - Approved</p>
                     </template>
@@ -170,7 +170,7 @@
                             accept={acceptedFormats}
                             record-id={applicationId}
                             file-field-name="Dragon_File_Type_fileupload__c"
-                            file-field-value="Course Wellness Plan"
+                            file-field-value={fileNameCourseWellness}
                             onuploadfinished={handleUploadFinished}
                             multiple>
                     </lightning-file-upload>
@@ -179,15 +179,15 @@
                 <br/><br/>
                 <!-- Immunization Record upload card -->
                 <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
-                    <template if:true={redRuleFormPending}>
+                    <template if:true={immunizationRecordPending}>
                         <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
                                            size="xx-small"></lightning-icon> Immunization Record - Awaiting Upload</p>
                     </template>
-                    <template if:true={redRuleFormRec}>
+                    <template if:true={immunizationRecordRec}>
                         <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
                                            size="xx-small"></lightning-icon> Immunization Record Plan - Upload Received, Approval Pending</p>
                     </template>
-                    <template if:true={redRuleFormApproved}>
+                    <template if:true={immunizationRecordApproved}>
                         <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
                                            size="xx-small"></lightning-icon> Immunization Record Plan - Approved</p>
                     </template>
@@ -199,7 +199,7 @@
                             accept={acceptedFormats}
                             record-id={applicationId}
                             file-field-name="Dragon_File_Type_fileupload__c"
-                            file-field-value="Immunization Record"
+                            file-field-value={fileNameImmunizatioRecord}
                             onuploadfinished={handleUploadFinished}
                             multiple>
                     </lightning-file-upload>
@@ -208,15 +208,15 @@
                 <br/><br/>
                 <!-- Medication Worksheet upload card -->
                 <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
-                    <template if:true={redRuleFormPending}>
+                    <template if:true={medicationWorksheetPending}>
                         <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
                                            size="xx-small"></lightning-icon> Medication Worksheet - Awaiting Upload</p>
                     </template>
-                    <template if:true={redRuleFormRec}>
+                    <template if:true={medicationWorksheetRec}>
                         <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
                                            size="xx-small"></lightning-icon> Medication Worksheet - Upload Received, Approval Pending</p>
                     </template>
-                    <template if:true={redRuleFormApproved}>
+                    <template if:true={medicationWorksheetApproved}>
                         <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
                                            size="xx-small"></lightning-icon> Medication Worksheet - Approved</p>
                     </template>
@@ -228,7 +228,7 @@
                             accept={acceptedFormats}
                             record-id={applicationId}
                             file-field-name="Dragon_File_Type_fileupload__c"
-                            file-field-value="Medication Worksheet"
+                            file-field-value={fileNameMedicationWorksheet}
                             onuploadfinished={handleUploadFinished}
                             multiple>
                     </lightning-file-upload>
@@ -237,15 +237,15 @@
                 <br/><br/>
                 <!-- COVID-19 Vaccination Certificate upload card -->
                 <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
-                    <template if:true={redRuleFormPending}>
+                    <template if:true={covidCertificatePending}>
                         <p><lightning-icon icon-name="action:close" alternative-text="Awaiting" title="Awaiting Upload"
                                            size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Awaiting Upload</p>
                     </template>
-                    <template if:true={redRuleFormRec}>
+                    <template if:true={covidCertificateRec}>
                         <p><lightning-icon icon-name="action:priority" alternative-text="Received" title="Upload Received, Approval Pending"
                                            size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Upload Received, Approval Pending</p>
                     </template>
-                    <template if:true={redRuleFormApproved}>
+                    <template if:true={covidCertificateApproved}>
                         <p><lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"
                                            size="xx-small"></lightning-icon> COVID-19 Vaccination Certificate - Approved</p>
                     </template>
@@ -257,7 +257,7 @@
                             accept={acceptedFormats}
                             record-id={applicationId}
                             file-field-name="Dragon_File_Type_fileupload__c"
-                            file-field-value="COVID-19 Vaccination Certificate"
+                            file-field-value={fileNameCovidVaccination}
                             onuploadfinished={handleUploadFinished}
                             multiple>
                     </lightning-file-upload>

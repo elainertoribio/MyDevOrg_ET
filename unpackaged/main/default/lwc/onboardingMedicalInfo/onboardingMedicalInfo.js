@@ -18,12 +18,25 @@ export default class OnboardingMedicalInfo extends LightningElement {
     @track doctorMedicalFormApproved;
     @track studentMedicalFormPending;
     @track doctorMedicalFormPending;
-    @track redRuleFormPending = true;
-    @track redRuleFormRec;
-    @track redRuleFormApproved;
+    // @track redRuleFormPending = true;
+    // @track redRuleFormRec;
+    // @track redRuleFormApproved;
     @track liabilityFormPending;
     @track liabilityFormRec;
     @track liabilityFormApproved;
+    @track courseWellnessPlanPending;
+    @track courseWellnessPlanRec;
+    @track courseWellnessPlanApproved;
+    @track immunizationRecordPending;
+    @track immunizationRecordRec;
+    @track immunizationRecordApproved;
+    @track medicationWorksheetPending;
+    @track medicationWorksheetRec;
+    @track medicationWorksheetApproved;
+    @track covidCertificatePending; 
+    @track covidCertificateRec;
+    @track covidCertificateApproved;
+    @track studentName; 
 
     hasMedicalFormComments = false;
     hasReqFormComments = false;
@@ -32,6 +45,7 @@ export default class OnboardingMedicalInfo extends LightningElement {
     get acceptedFormats() {
         return ['.pdf', '.png', '.jpg', '.gif', '.doc', 'docx'];
     }
+
 
     connectedCallback() {
         console.log('--->onload onboardingPassport: connectedCallback()');
@@ -57,6 +71,8 @@ export default class OnboardingMedicalInfo extends LightningElement {
                         console.log('Doctor_Medical_Form_Received__c: ' + result.Doctor_Medical_Form_Received__c);
                         console.log('Mental_Health_Form_Received__c: ' + result.Mental_Health_Form_Received__c);
 
+                        this.studentName = result.Student__r.Full_Name__c;
+
                         this.studentMedicalFormRec = result.Student_Medical_Form_Received__c;
                         this.studentMedicalFormApproved = result.Student_Medical_Form_Approved__c;
                         this.doctorMedicalFormRec = result.Doctor_Medical_Form_Received__c;
@@ -65,47 +81,33 @@ export default class OnboardingMedicalInfo extends LightningElement {
                         this.redRuleFormApproved = result.Red_Rules_Contract_Approved__c;
                         this.liabilityFormRec = result.Liability_Form_Received__c;
                         this.liabilityFormApproved = result.Liability_Form_Approved__c;
-                        if(this.studentMedicalFormRec == true)
-                        {
-                            this.studentMedicalFormPending = false;
-                        }
-                        else
-                        {
-                            this.studentMedicalFormPending = true;
-                        }
+                        this.courseWellnessPlanRec = result.Course_Wellness_Plan_Received__c;
+                        this.courseWellnessPlanApproved = result.Course_Wellness_Plan_Approved__c;
+                        this.immunizationRecordRec = result.Immunization_Record_Received__c;
+                        this.immunizationRecordApproved = result.Immunization_Record_Approved__c;
+                        this.medicationWorksheetRec = result.Medication_Worksheet_Received__c;
+                        this.medicationWorksheetApproved = result.Medication_Worksheet_Approved__c;
+                        this.covidCertificateRec = result.COVID_19_Certificate_Received__c;
+                        this.covidCertificateApproved = result.COVID_19_Certificate_Approved__c;
+                        
 
-                        if(this.doctorMedicalFormRec == true)
-                        {
-                            this.doctorMedicalFormPending = false;
-                        }
-                        else
-                        {
-                            this.doctorMedicalFormPending = true;
-                        }
-
-                        if(this.redRuleFormRec == true)
-                        {
-                            this.redRuleFormPending = false;
-                        }
-                        else
-                        {
-                            this.redRuleFormPending = true;
-                        }
-
-                        if(this.liabilityFormRec == true)
-                        {
-                            this.liabilityFormPending = false;
-                        }
-                        else
-                        {
-                            this.liabilityFormPending = true;
-                        }
+                        this.studentMedicalFormRec ? this.studentMedicalFormPending = false : this.studentMedicalFormPending = true;
+                        this.doctorMedicalFormRec ? this.doctorMedicalFormPending = false: this.doctorMedicalFormPending = true;
+                        this.liabilityFormRec ? this.liabilityFormPending = false: this.liabilityFormPending = true;
+                        this.courseWellnessPlanRec ? this.courseWellnessPlanPending = false : this.courseWellnessPlanPending = true;
+                        this.immunizationRecordRec ? this.immunizationRecordPending = false : this.immunizationRecordPending = true;
+                        this.medicationWorksheetRec ? this.medicationWorksheetPending = false : this.medicationWorksheetPending = true;
+                        this.covidCertificateRec ? this.covidCertificatePending = false : this.courseWellnessPlanPending = true;
 
 
                         if(this.studentMedicalFormApproved) this.studentMedicalFormRec = false;
                         if(this.doctorMedicalFormApproved) this.doctorMedicalFormRec = false;
-                        if(this.redRuleFormApproved) this.redRuleFormRec = false;
+                       // if(this.redRuleFormApproved) this.redRuleFormRec = false;
                         if(this.liabilityFormApproved) this.liabilityFormRec = false;
+                        if(this.courseWellnessPlanApproved) this.courseWellnessPlanRec = false;
+                        if(this.covidCertificateApproved) this.covidCertificateRec = false;
+                        if(this.immunizationRecordApproved) this.immunizationRecordRec = false;
+                        if(this.medicationWorksheetApproved) this.medicationWorksheetRec =false;
 
                         if(result.Medical_Forms_Comments_To_Applicant__c != null)
                         {
@@ -125,6 +127,23 @@ export default class OnboardingMedicalInfo extends LightningElement {
 
     }
 
+    get fileNameLiabilityForm(){
+        return `${this.studentName} - Liability Form`               
+    }
+
+    get fileNameCourseWellness(){
+        return `${this.studentName} - Course Wellness Plan`                     
+    }
+    get fileNameImmunizatioRecord(){
+        return `${this.studentName} - Immunization Record`                       
+    }
+    get fileNameMedicationWorksheet(){
+        return `${this.studentName} - Medication Worksheet`                       
+    }
+
+    get fileNameCovidVaccination(){
+        return `${this.studentName} - COVID-19 Vaccination Certificate`                      
+    }
     handleUploadFinished(event) {
         // Get the list of uploaded files
         const uploadedFiles = event.detail.files;
