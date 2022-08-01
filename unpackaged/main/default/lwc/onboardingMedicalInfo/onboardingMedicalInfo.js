@@ -33,7 +33,7 @@ export default class OnboardingMedicalInfo extends LightningElement {
     covidCertificatePending; 
     covidCertificateRec;
     covidCertificateApproved;
-    studentName; 
+    @track studentName; 
 
     hasMedicalFormComments = false;
     hasReqFormComments = false;
