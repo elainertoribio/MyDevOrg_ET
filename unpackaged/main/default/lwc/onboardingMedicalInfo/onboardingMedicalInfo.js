@@ -11,16 +11,13 @@ import { updateRecord } from 'lightning/uiRecordApi';
 
 export default class OnboardingMedicalInfo extends LightningElement {
 
+    doctorMedicalFormApproved;
     @track applicationId;
     @track studentMedicalFormRec;
     @track studentMedicalFormApproved;
     @track doctorMedicalFormRec;
-    @track doctorMedicalFormApproved;
     @track studentMedicalFormPending;
     @track doctorMedicalFormPending;
-    // @track redRuleFormPending = true;
-    // @track redRuleFormRec;
-    // @track redRuleFormApproved;
     @track liabilityFormPending;
     @track liabilityFormRec;
     @track liabilityFormApproved;
@@ -102,7 +99,6 @@ export default class OnboardingMedicalInfo extends LightningElement {
 
                         if(this.studentMedicalFormApproved) this.studentMedicalFormRec = false;
                         if(this.doctorMedicalFormApproved) this.doctorMedicalFormRec = false;
-                       // if(this.redRuleFormApproved) this.redRuleFormRec = false;
                         if(this.liabilityFormApproved) this.liabilityFormRec = false;
                         if(this.courseWellnessPlanApproved) this.courseWellnessPlanRec = false;
                         if(this.covidCertificateApproved) this.covidCertificateRec = false;
